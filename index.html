@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nick Finance - Dashboard Funcional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo"><i class="fa-solid fa-wallet"></i> Nick<span>Finance</span></div>
+        <ul class="menu" id="nav-menu">
+            <li class="menu-item active" data-target="screen-dashboard">
+                <a><i class="fa-solid fa-chart-simple"></i> Visão Geral</a>
+            </li>
+            <li class="menu-item" data-target="screen-transactions">
+                <a><i class="fa-solid fa-list-check"></i> Transações</a>
+            </li>
+            <li class="menu-item" data-target="screen-goals">
+                <a><i class="fa-solid fa-bullseye"></i> Metas do Mês</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <header class="main-header">
+            <div>
+                <h1 id="header-title">Olá, <span>Bem-vinda!</span></h1>
+                <p id="header-subtitle" style="color: var(--text-muted); margin-top: 5px;">Seu dashboard está pronto para ser configurado.</p>
+            </div>
+            <div class="user-profile">
+                <i class="fa-solid fa-user-astronaut"></i>
+                <span style="font-weight: 500; font-size: 15px;">Em Desenvolvimento</span>
+            </div>
+        </header>
+
+        <div id="screen-dashboard" class="screen active">
+            <div class="bento-grid">
+                
+                <div class="bento-card col-8 row-2">
+                    <div class="card-header-box">
+                        <span class="card-title">Visão Financeira & Lançamento</span>
+                        <div class="card-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 40px; margin-bottom: 20px;">
+                        <div>
+                            <div class="balance-value" id="label-saldo">R$ 0,00</div>
+                            <div class="balance-sub">Saldo Disponível</div>
+                        </div>
+                        <div>
+                            <div class="balance-value" id="label-receitas" style="color:#00e676;">R$ 0,00</div>
+                            <div class="balance-sub">Receitas do Mês</div>
+                        </div>
+                    </div>
+                    
+                    <form class="quick-form" id="form-transacao">
+                        <div class="form-group">
+                            <select id="input-tipo" style="flex: 1;" required>
+                                <option value="saida">Saída (Despesa)</option>
+                                <option value="entrada">Entrada (Receita)</option>
+                            </select>
+                            <input type="text" id="input-descricao" placeholder="Descrição (Ex: Salário, Açaí...)" style="flex: 2;" required>
+                            <input type="number" id="input-valor" step="0.01" placeholder="R$ 0,00" style="flex: 1;" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="input-categoria" style="width: 100%;" required>
+                                <option value="">Selecione uma categoria...</option>
+                                <optgroup label="Entradas">
+                                    <option value="salario">Salário CLT / Adiantamento</option>
+                                    <option value="renda_extra">Renda Extra / Projetos</option>
+                                </optgroup>
+                                <optgroup label="Saídas - Dia a Dia">
+                                    <option value="food">Alimentação (Fast Food, Delivery, Mercados)</option>
+                                    <option value="transport">Transporte e Mobilidade</option>
+                                    <option value="beauty">Beleza e Cosméticos</option>
+                                    <option value="apparel">Vestuário e Calçados</option>
+                                    <option value="education">Educação e Faculdade</option>
+                                    <option value="leisure">Lazer e Ingressos</option>
+                                    <option value="others">Outros Gastos</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-submit">Registrar Movimentação</button>
+                    </form>
+                </div>
+
+                <div class="bento-card col-4 row-2">
+                    <div class="card-header-box">
+                        <span class="card-title">Divisão de Gastos</span>
+                        <div class="card-icon"><i class="fa-solid fa-pie-chart"></i></div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bento-card col-4 row-1">
+                    <div class="card-header-box">
+                        <span class="card-title">Meta Ativa</span>
+                        <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    </div>
+                    <div class="balance-value" id="dash-meta-valor" style="font-size: 32px;">R$ 0,00</div>
+                    <p class="balance-sub" id="dash-meta-nome">Nenhuma meta configurada ainda.</p>
+                </div>
+
+                <div class="bento-card col-4 row-1" style="background: linear-gradient(135deg, #15132B 0%, rgba(113, 53, 255, 0.05) 100%);">
+                    <div class="card-header-box">
+                        <span class="card-title">Dica Automática</span>
+                        <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 10px;" id="dash-dica">
+                        Adicione suas primeiras despesas para liberar insights.
+                    </p>
+                </div>
+
+                <div class="bento-card col-4 row-1">
+                    <div class="card-header-box">
+                        <span class="card-title">Transporte Tracker</span>
+                        <div class="card-icon"><i class="fa-solid fa-bus"></i></div>
+                    </div>
+                    <div class="balance-value" id="dash-transporte" style="color: #555; font-size: 32px;">R$ 0,00</div>
+                    <p class="balance-sub">Total gasto acumulado.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="screen-transactions" class="screen">
+            <div class="full-list-card">
+                <div class="card-header-box" style="padding-bottom: 10px;">
+                    <span class="card-title">Histórico Detalhado</span>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição do Gasto</th>
+                                <th>Categoria</th>
+                                <th style="text-align: right;">Valor (R$)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-transacoes-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen-goals" class="screen">
+            <div class="full-list-card" style="min-height: auto; margin-bottom: 24px;">
+                <div class="card-header-box">
+                    <span class="card-title">Gerenciador de Metas</span>
+                    <button class="btn-submit" id="btn-open-modal" style="padding: 8px 20px;">+ Nova Meta</button>
+                </div>
+            </div>
+            <div class="bento-grid" id="goals-grid-container">
+                </div>
+        </div>
+
+    </main>
+
+    <div class="modal-overlay" id="modal-nova-meta">
+        <div class="bento-card modal-content">
+            <div class="card-header-box" style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;">
+                <span class="card-title" style="color: var(--text-main); font-size: 18px;">Criar Nova Meta</span>
+                <button class="close-btn" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <form class="quick-form" id="form-meta">
+                <div class="form-group" style="flex-direction: column; gap: 6px;">
+                    <label style="font-size: 14px; color: var(--text-muted);">Nome da Meta</label>
+                    <input type="text" id="meta-nome" placeholder="Ex: Comprar Notebook, Faculdade..." required>
+                </div>
+                <div class="form-group">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 14px; color: var(--text-muted);">Valor Alvo (R$)</label>
+                        <input type="number" id="meta-valor" step="0.01" placeholder="R$ 0,00" required>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 14px; color: var(--text-muted);">Data Limite</label>
+                        <input type="date" id="meta-data" required>
+                    </div>
+                </div>
+                <div class="form-group" style="flex-direction: column; gap: 6px; margin-top: 10px;">
+                    <label style="font-size: 14px; color: var(--text-muted);">Selecione um Ícone Visual</label>
+                    <div class="icon-selector">
+                        <input type="radio" name="meta_icon" id="icon-laptop" value="icon-laptop" class="icon-option" checked>
+                        <label for="icon-laptop" class="icon-label"><i class="fa-solid fa-laptop"></i></label>
+                        <input type="radio" name="meta_icon" id="icon-plane" value="icon-plane" class="icon-option">
+                        <label for="icon-plane" class="icon-label"><i class="fa-solid fa-plane-departure"></i></label>
+                        <input type="radio" name="meta_icon" id="icon-car" value="icon-car" class="icon-option">
+                        <label for="icon-car" class="icon-label"><i class="fa-solid fa-car"></i></label>
+                        <input type="radio" name="meta_icon" id="icon-piggy" value="icon-piggy" class="icon-option">
+                        <label for="icon-piggy" class="icon-label"><i class="fa-solid fa-piggy-bank"></i></label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit" style="margin-top: 20px;">Salvar Meta</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
